@@ -19,7 +19,7 @@ pipeline {
                 sh 'cp -r $WORKSPACE/. $GOPATH/src/github.com/kypseli/todo-api'
                 sh 'cd $GOPATH/src/github.com/kypseli/todo-api && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o $WORKSPACE/app .'
               }
-              stash name: 'app', includes: 'app'
+              stash name: 'app', includes: 'app, Dockerfile'
             }
         }
         stage('Docker Build and Push') {
