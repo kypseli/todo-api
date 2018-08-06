@@ -14,6 +14,8 @@ pipeline {
               }
             }
             steps {
+              sh 'ls -la'
+              echo 'pwd'
               container('golang') {
                 sh 'mkdir -p $GOPATH/src/github.com/kypseli/todo-api'
                 sh 'ln -sf $WORKSPACE $GOPATH/src/github.com/kypseli/todo-api'
