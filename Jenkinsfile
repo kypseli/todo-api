@@ -14,10 +14,14 @@ pipeline {
               }
             }
             steps {
-                container('golang') {
-                  sh 'CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o app app.go'
+              withEnv(['GOPATH=' + pwd()]){
+                dir ('src/github.com/username') {
+                  container('golang') {
+                    sh 'CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o app .'
+                  }
                 }
-                stash name: 'app', includes: 'app'
+              }
+              stash name: 'app', includes: 'app'
             }
         }
         stage('Docker Build and Push') {
