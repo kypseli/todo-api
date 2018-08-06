@@ -16,7 +16,7 @@ pipeline {
             steps {
                 container('golang') {
                   sh 'mkdir -p /go/src/github.com/kypseli/todo-api/'
-                  sh 'cp ./ /go/src/github.com/kypseli/todo-api/'
+                  sh 'cp -r ./ /go/src/github.com/kypseli/todo-api/'
                   sh 'cd /go/src/github.com/kypseli/todo-api/'
                   sh 'go install github.com/kypseli/todo-api'
                   sh 'CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o app .'
