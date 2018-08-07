@@ -10,5 +10,8 @@ spec:
     tty: true
   - name: mongo
     image: mongo:4.1
+    command:
+    - docker-entrypoint.sh
     ports:
     - containerPort: 27017
+      name: mongo
