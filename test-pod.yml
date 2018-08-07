@@ -11,6 +11,8 @@ spec:
   - name: mongo
     image: mongo:4.1
     command:
+    - docker-entrypoint.sh
+    args:
     - mongodb
     ports:
     - containerPort: 27017
