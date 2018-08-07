@@ -8,7 +8,6 @@ spec:
     command:
     - cat
     tty: true
-  containers:
   - name: mongo
     image: mongo:4.1
     ports:
