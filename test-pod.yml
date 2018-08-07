@@ -10,6 +10,6 @@ spec:
     tty: true
   containers:
   - name: mongo
-    image: mongo:latest
+    image: mongo:4.1
     ports:
-      - '27100:27017'
+    - containerPort: 27017
