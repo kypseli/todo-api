@@ -50,7 +50,7 @@ pipeline {
       }
       steps {
         publishEvent simpleEvent('todo-api')
-        dockerBuildPush('beedemo/todo-api', "${BUILD_NUMBER}",'./') {
+        dockerBuildPush('kypseli/todo-api', "${BUILD_NUMBER}",'./') {
             unstash 'app'
         }
       }
