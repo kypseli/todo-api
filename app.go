@@ -102,7 +102,7 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 
 // establish a connection to DB
 func init() {
-	todosDao.Server = "mongo:27017"
+	todosDao.Server = "localhost:27017"
 	todosDao.Database = "todo_db"
 	todosDao.Connect()
 }
