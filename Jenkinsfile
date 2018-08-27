@@ -49,10 +49,11 @@ pipeline {
         branch 'master'
       }
       steps {
-        publishEvent simpleEvent('todo-api')
+        checkpoint('Post Tests')
         dockerBuildPush('todo-api', "${BUILD_NUMBER}",'./') {
             unstash 'app'
         }
+        publishEvent simpleEvent('todo-api')
       }
     }
   }
