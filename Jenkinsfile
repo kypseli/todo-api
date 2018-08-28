@@ -10,6 +10,7 @@ pipeline {
       agent {
         kubernetes {
           label 'golang-build'
+          inheritFrom 'default-jnlp'
           yamlFile 'build-pod.yml'
         }
       }
@@ -27,6 +28,7 @@ pipeline {
       agent {
         kubernetes {
           label 'golang-test'
+          inheritFrom 'default-jnlp'
           yamlFile 'test-pod.yml'
         }
       }
