@@ -22,6 +22,7 @@ const (
 // Establish a connection to database
 func (m *TodosDAO) Connect() {
 	session, err := mgo.Dial(m.Server)
+	session.SetMode(mgo.Monotonic, true)
 	if err != nil {
 		log.Fatal(err)
 	}
