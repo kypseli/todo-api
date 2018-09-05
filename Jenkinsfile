@@ -50,6 +50,7 @@ pipeline {
         branch 'master'
       }
       steps {
+        devOpticsConsumes latestUpstream: true
         checkpoint('Post Tests')
         dockerBuildPush('todo-api', "${BUILD_NUMBER}",'./') {
             unstash 'app'
