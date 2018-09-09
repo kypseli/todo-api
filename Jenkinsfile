@@ -15,9 +15,7 @@ pipeline {
       }
       steps {
         container('golang') {
-          sh 'ls -ltr'
-          sh 'mkdir -p $GOPATH/src/github.com/kypseli/todo-api'
-          sh 'cp -r $WORKSPACE/. $GOPATH/src/github.com/kypseli/todo-api'
+          sh 'ln -s `pwd` $GOPATH/src/github.com/kypseli/todo-api'
           sh 'cd $GOPATH/src/github.com/kypseli/todo-api && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o $WORKSPACE/app .'
         }
         stash name: 'app', includes: 'app, Dockerfile'
@@ -36,8 +34,7 @@ pipeline {
       }
       steps {
         container('golang') {
-          sh 'mkdir -p $GOPATH/src/github.com/kypseli/todo-api'
-          sh 'cp -r $WORKSPACE/. $GOPATH/src/github.com/kypseli/todo-api'
+          sh 'ln -s `pwd` $GOPATH/src/github.com/kypseli/todo-api'
           sh 'cd $GOPATH/src/github.com/kypseli/todo-api && go test'
         }
       }
