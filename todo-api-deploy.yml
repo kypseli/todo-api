@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: todo-api
+spec:
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+    protocol: TCP
+  selector:
+    app: todo-api
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: todo-api-production
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: todo-api
+      labels:
+        app: todo-api
+        env: production
+    spec:
+      containers:
+      - name: todo-api
+        image: REPLACE_IMAGE_TAG
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "100m"
+        imagePullPolicy: Always
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+        command: ["/app"]
+        ports:
+        - name: todo-api
+          containerPort: 3000

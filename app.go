@@ -102,9 +102,18 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 
 // establish a connection to DB
 func init() {
-	todosDao.Server = "localhost:27017"
+	mongoHost := getEnv("MONGO_HOST", "localhost")
+	mongoPort := getEnv("MONGO_PORT", "27017")
+	todosDao.Server = fmt.Sprintf("%s:%s", mongoHost, mongoPort)
 	todosDao.Database = "todo_db"
 	todosDao.Connect()
+}
+
+func getEnv(key, fallback string) string {
+    if value, ok := os.LookupEnv(key); ok {
+        return value
+    }
+    return fallback
 }
 
 // Define HTTP request routes

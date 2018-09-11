@@ -59,5 +59,16 @@ pipeline {
         publishEvent simpleEvent('todo-api')
       }
     }
+    stage('Deploy') {
+      //don't need an agent as one is provided in shared pipeline library -> kypseli
+      agent none
+      when {
+        beforeAgent true
+        branch 'master'
+      }
+      steps {
+        kubeDeploy('todo-api', 'kypseli', "${BUILD_NUMBER}", 'todo-api-deploy.yml')
+      }
+    }
   }
 }
