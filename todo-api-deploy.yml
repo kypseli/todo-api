@@ -32,6 +32,11 @@ spec:
             memory: "500Mi"
             cpu: "100m"
         imagePullPolicy: Always
+        env:
+          - name: MONGO_HOST
+            value: "mongo-0.mongo,mongo-1.mongo,mongo-2.mongo"
+          - name: MONGO_PORT
+            value: "27017"
         readinessProbe:
           httpGet:
             path: /health
