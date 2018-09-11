@@ -30,7 +30,10 @@ func AllTodosEndPoint(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
-    }
+	}
+	if todos == nil {
+		respondWithJson(w, http.StatusOK, {})
+	}
 	respondWithJson(w, http.StatusOK, todos)
 }
 
