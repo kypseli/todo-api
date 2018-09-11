@@ -3,6 +3,7 @@ pipeline {
   options { 
     buildDiscarder(logRotator(numToKeepStr: '5')) 
     disableConcurrentBuilds()
+    skipDefaultCheckout() 
   }
   agent none
   stages {
@@ -14,6 +15,7 @@ pipeline {
         }
       }
       steps {
+        checkout scm
         container('golang') {
           sh """
             mkdir -p /go/src/github.com/kypseli
@@ -36,11 +38,13 @@ pipeline {
         not { branch 'pr*' } 
       }
       steps {
+        checkout scm
         container('golang') {
           sh 'mkdir -p $GOPATH/src/github.com/kypseli'
           sh 'ln -s `pwd` $GOPATH/src/github.com/kypseli/todo-api'
           sh 'cd $GOPATH/src/github.com/kypseli/todo-api && go test'
         }
+        stash name: 'deploy', includes: 'todo-api-deploy.yml'
       }
     }
     stage('Docker Build and Push') {
@@ -67,7 +71,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        kubeDeploy('todo-api', 'kypseli', "${BUILD_NUMBER}", 'todo-api-deploy.yml')
+        kubeDeploy('todo-api', 'kypseli', "${BUILD_NUMBER}", './todo-api-deploy.yml')
       }
     }
   }
