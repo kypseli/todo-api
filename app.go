@@ -32,7 +32,7 @@ func AllTodosEndPoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if todos == nil {
-		respondWithJson(w, http.StatusOK, {})
+		respondWithJson(w, http.StatusOK, map[string]string{})
 	}
 	respondWithJson(w, http.StatusOK, todos)
 }
