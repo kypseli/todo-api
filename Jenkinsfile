@@ -44,6 +44,7 @@ pipeline {
           sh 'ln -s `pwd` $GOPATH/src/github.com/kypseli/todo-api'
           sh 'cd $GOPATH/src/github.com/kypseli/todo-api && go test'
         }
+        //stash modified deploy yml
         stash name: 'deploy', includes: 'todo-api-deploy.yml'
       }
     }
